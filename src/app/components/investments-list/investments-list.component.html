@@ -1,0 +1,65 @@
+<div class="header">
+  <h1>INVESTMENTOS</h1>
+</div>
+
+<div class="content-container">
+  <div class="card">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">NOME</th>
+            <th scope="col">OBJETIVO</th>
+            <th scope="col">SALDO</th>
+            <th scope="col" class="text-end">AÇÕES</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (investment of investments; track investment.id) {
+            <tr>
+              <td>{{ investment.id }}</td>
+              <td>{{ investment.nome }}</td>
+              <td>{{ investment.objetivo }}</td>
+              <td>{{ formatCurrency(investment.saldo) }}</td>
+              <td class="text-end">
+                <div class="action-buttons justify-content-end">
+                  <button
+                    type="button"
+                    class="btn-action view"
+                    (click)="onView(investment)"
+                    aria-label="Visualizar investment"
+                    title="Visualizar">
+                    <i class="bi bi-search" style="font-size: 1rem;"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-action edit"
+                    (click)="onEdit(investment)"
+                    aria-label="Editar investment"
+                    title="Editar">
+                    <i class="bi bi-pencil" style="font-size: 1rem;"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-action delete"
+                    (click)="onDelete(investment)"
+                    aria-label="Excluir investment"
+                    title="Excluir">
+                    <i class="bi bi-trash" style="font-size: 1rem;"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="text-center py-4">
+                <p class="text-muted mb-0">Nenhum investment encontrado.</p>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
