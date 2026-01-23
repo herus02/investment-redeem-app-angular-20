@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { InvestmentService } from '../../services/investment.service';
 import { Investment, formatCurrency } from '../../models/investment.model';
 
@@ -14,7 +15,10 @@ export class InvestmentsListComponent implements OnInit {
   investments: Investment[] = [];
   formatCurrency = formatCurrency;
 
-  constructor(private investmentService: InvestmentService) {}
+  constructor(
+    private investmentService: InvestmentService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadInvestments();
@@ -32,6 +36,9 @@ export class InvestmentsListComponent implements OnInit {
   }
 
   onInvestmentClick(investment: Investment): void {
+    if (investment.indicadorCarencia === 'N') {
+      this.router.navigate(['/redeem', encodeURIComponent(investment.nome)]);
+    }
   }
 
   isDisabled(investment: Investment): boolean {

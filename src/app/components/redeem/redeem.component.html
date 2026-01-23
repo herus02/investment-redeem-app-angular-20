@@ -1,0 +1,99 @@
+<div class="header">
+  <h1>DADOS DO INVESTIMENTOS</h1>
+</div>
+
+<div class="content-container">
+  <div class="card investment-data" *ngIf="investment">
+    <div class="card-body">
+      <div class="data-row">
+        <div class="data-item">
+          <i class="bi bi-person"></i>
+          <div>
+            <span class="label">NOME</span>
+            <span class="value">{{ investment.nome }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <i class="bi bi-graph-up"></i>
+          <div>
+            <span class="label">OBJETIVO</span>
+            <span class="value">{{ investment.objetivo }}</span>
+          </div>
+        </div>
+        <div class="data-item">
+          <i class="bi bi-piggy-bank"></i>
+          <div>
+            <span class="label">SALDO TOTAL</span>
+            <span class="value">{{ formatCurrency(investment.saldoTotal) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="header">
+    <h1>RESGATE</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">AÇÃO</th>
+            <th scope="col">SALDO ACUMULADO</th>
+            <th scope="col">VALOR A RESGATAR</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (acao of investment?.acoes; track acao.id) {
+            @let redeem = getRedeemValue(acao.id);
+            @let saldoAcumulado = getSaldoAcumulado(acao);
+            <tr>
+              <td>{{ $index + 1 }}</td>
+              <td>{{ acao.nome }}</td>
+              <td>{{ formatCurrency(saldoAcumulado) }}</td>
+              <td>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="redeem.hasError"
+                    [value]="redeem.formattedValue"
+                    (input)="onRedeemValueChange(acao.id, $event)"
+                    placeholder="Valor a ser resgatado"
+                  />
+                  @if (redeem.hasError) {
+                    <div class="invalid-feedback d-block">
+                      {{ redeem.errorMessage }}
+                    </div>
+                  }
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="redeem-footer">
+    <div class="total-redeem">
+      <span class="label">VALOR TOTAL DO RESGATE:</span>
+      <span class="value">{{ formatCurrency(totalRedeem()) }}</span>
+    </div>
+    <div class="action-buttons">
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        VOLTAR
+      </button>
+      <button 
+        type="button" 
+        class="btn btn-primary" 
+        [disabled]="!hasFilledFields()"
+        (click)="confirmRedeem()">
+        CONFIRMAR RESGATE
+      </button>
+    </div>
+  </div>
+</div>

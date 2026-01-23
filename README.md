@@ -14,6 +14,9 @@ Implementadas até o momento:
 - Interface alinhada ao screenshot fornecido
 - Testes unitários dos componentes e do service
 - Consumo da mock API 
+- Navegação para o componente de resgate 
+- Validação de campos (valor máximo) e másca  ra nos campos 
+- Cálculo dinâmico do valor total
 
 ## Regras de Negócio
 Implementadas até o momento:
@@ -42,8 +45,9 @@ A aplicação estará disponível em `http://localhost:4200`
 - Angular 20
   - Control Flow
   - Standalone Components
-  - `Inject()` para importar services
-  - Interceptor para tratar o retorno
+  - `Inject()`
+  - Interceptor
+  - Signals
 - Bootstrap 5
 - RxJS
 - TypeScript
