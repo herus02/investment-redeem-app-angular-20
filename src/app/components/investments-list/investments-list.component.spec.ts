@@ -11,23 +11,30 @@ describe('InvestmentsListComponent', () => {
 
   const mockInvestments: Investment[] = [
     {
-      id: 1,
-      nome: 'INVESTMENT I',
-      objetivo: 'Aposentadoria',
-      saldo: 39258.24
+      nome: 'INVESTIMENTO I',
+      objetivo: 'Minha aposentadoria',
+      saldoTotal: 39321.29,
+      indicadorCarencia: 'N',
+      acoes: [
+        {
+          id: '1',
+          nome: 'Banco do Brasil (BBAS3)',
+          percentual: 28.1
+        }
+      ]
     },
     {
-      id: 2,
-      nome: 'INVESTMENT II',
-      objetivo: 'Viagem dos sonhos',
-      saldo: 10320.00
+      nome: 'INVESTIMENTO II',
+      objetivo: 'Viajen dos sonhos',
+      saldoTotal: 7300,
+      indicadorCarencia: 'S',
+      acoes: []
     }
   ];
 
   beforeEach(async () => {
     const serviceSpy = jasmine.createSpyObj('InvestmentService', [
-      'getInvestments',
-      'deleteInvestment'
+      'getInvestments'
     ]);
 
     await TestBed.configureTestingModule({
@@ -86,32 +93,30 @@ describe('InvestmentsListComponent', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Editar investment:', mockInvestments[0]);
   });
 
-  it('should delete investment when confirmed', () => {
-    investmentService.getInvestments.and.returnValue(of(mockInvestments));
-    investmentService.deleteInvestment.and.returnValue(of(true));
-    investmentService.getInvestments.and.returnValue(of([mockInvestments[1]]));
-
-    fixture.detectChanges();
-
-    spyOn(window, 'confirm').and.returnValue(true);
-    component.onDelete(mockInvestments[0]);
-
-    expect(investmentService.deleteInvestment).toHaveBeenCalledWith(1);
+  it('should check if investment is disabled correctly', () => {
+    expect(component.isDisabled(mockInvestments[0])).toBe(false);
+    expect(component.isDisabled(mockInvestments[1])).toBe(true);
   });
 
-  it('should not delete investment when not confirmed', () => {
+  it('should handle investment click', () => {
     investmentService.getInvestments.and.returnValue(of(mockInvestments));
     fixture.detectChanges();
 
-    spyOn(window, 'confirm').and.returnValue(false);
-    component.onDelete(mockInvestments[0]);
-
-    expect(investmentService.deleteInvestment).not.toHaveBeenCalled();
+    expect(() => component.onInvestmentClick(mockInvestments[0])).not.toThrow();
   });
 
   it('should format currency correctly', () => {
     const formatted = component.formatCurrency(1234.56);
     expect(formatted).toContain('R$');
     expect(formatted).toContain('1.234,56');
+  });
+
+  it('should display saldoTotal correctly', () => {
+    investmentService.getInvestments.and.returnValue(of(mockInvestments));
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const saldoCell = compiled.querySelector('tbody tr td:nth-child(4)');
+    expect(saldoCell?.textContent).toContain('R$');
   });
 });

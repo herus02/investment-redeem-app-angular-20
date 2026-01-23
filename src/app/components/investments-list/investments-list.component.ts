@@ -31,28 +31,24 @@ export class InvestmentsListComponent implements OnInit {
     });
   }
 
+  onInvestmentClick(investment: Investment): void {
+  }
+
+  isDisabled(investment: Investment): boolean {
+    return investment.indicadorCarencia === 'S';
+  }
+
   onView(investment: Investment): void {
     console.log('Visualizar investment:', investment);
-    // TODO: Implementar navegação para detalhes
   }
 
   onEdit(investment: Investment): void {
     console.log('Editar investment:', investment);
-    // TODO: Implementar edição
   }
 
   onDelete(investment: Investment): void {
-    if (confirm(`Tem certeza que deseja excluir o investment "${investment.nome}"?`)) {
-      this.investmentService.deleteInvestment(investment.id).subscribe({
-        next: (success) => {
-          if (success) {
-            this.loadInvestments();
-          }
-        },
-        error: (error) => {
-          console.error('Erro ao excluir investment:', error);
-        }
-      });
+    if (confirm(`Tem certeza que deseja excluir o investmento "${investment.nome}"?`)) {
+      console.log('Exclusão não implementada');
     }
   }
 }

@@ -12,21 +12,27 @@
             <th scope="col">NOME</th>
             <th scope="col">OBJETIVO</th>
             <th scope="col">SALDO</th>
-            <th scope="col" class="text-end">AÇÕES</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          @for (investment of investments; track investment.id) {
-            <tr>
-              <td>{{ investment.id }}</td>
+          @for (investment of investments; track investment.nome) {
+            <tr
+              [class.disabled]="isDisabled(investment)"
+              [class.clickable]="!isDisabled(investment)"
+              (click)="onInvestmentClick(investment)"
+              
+              [style.opacity]="isDisabled(investment) ? '0.6' : '1'">
+              <td>{{ $index + 1 }}</td>
               <td>{{ investment.nome }}</td>
               <td>{{ investment.objetivo }}</td>
-              <td>{{ formatCurrency(investment.saldo) }}</td>
-              <td class="text-end">
+              <td>{{ formatCurrency(investment.saldoTotal) }}</td>
+              <td class="text-end" (click)="$event.stopPropagation()">
                 <div class="action-buttons justify-content-end">
                   <button
                     type="button"
                     class="btn-action view"
+                    [disabled]="isDisabled(investment)"
                     (click)="onView(investment)"
                     aria-label="Visualizar investmento"
                     title="Visualizar">
@@ -35,6 +41,7 @@
                   <button
                     type="button"
                     class="btn-action edit"
+                    [disabled]="isDisabled(investment)"
                     (click)="onEdit(investment)"
                     aria-label="Editar investmento"
                     title="Editar">
@@ -43,6 +50,7 @@
                   <button
                     type="button"
                     class="btn-action delete"
+                    [disabled]="isDisabled(investment)"
                     (click)="onDelete(investment)"
                     aria-label="Excluir investmento"
                     title="Excluir">

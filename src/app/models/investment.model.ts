@@ -1,8 +1,15 @@
+export interface Acao {
+  id: string;
+  nome: string;
+  percentual: number;
+}
+
 export interface Investment {
-  id: number;
   nome: string;
   objetivo: string;
-  saldo: number;
+  saldoTotal: number;
+  indicadorCarencia: string;
+  acoes: Acao[];
 }
 
 export function formatCurrency(value: number): string {

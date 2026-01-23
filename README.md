@@ -35,6 +35,7 @@ A aplicação estará disponível em `http://localhost:4200`
   - Control Flow
   - Standalone Components
   - `Inject()` para importar services
+  - Interceptor para tratar o retorno
 - Bootstrap 5
 - RxJS
 - TypeScript

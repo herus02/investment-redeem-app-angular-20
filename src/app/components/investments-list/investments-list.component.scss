@@ -1,1 +1,21 @@
-// Component-specific styles if needed
+.table tbody tr.disabled {
+  opacity: 0.6;
+  cursor: not-allowed !important;
+}
+
+.table tbody tr.disabled:hover {
+  background-color: transparent !important;
+}
+
+.table tbody tr.clickable {
+  cursor: pointer;
+}
+
+.table tbody tr.clickable:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
