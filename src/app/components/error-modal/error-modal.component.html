@@ -1,0 +1,22 @@
+<div class="modal-backdrop show" (click)="onClose()"></div>
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content error-modal">
+      <div class="modal-body">
+        <p class="error-title">Você preencheu um ou mais campos com valor acima do permitido:</p>
+        <div class="error-details">
+          @for (detail of invalidAcoesDetails; track detail.nome) {
+            <p class="error-message">
+              {{ detail.nome }}: O valor máximo de resgate é: {{ formatCurrency(detail.saldoMaximo) }}
+            </p>
+          }
+        </div>
+      </div>
+      <div class="modal-footer-error">
+        <button type="button" class="btn btn-primary btn-correct" (click)="onClose()">
+          CORRIGIR
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

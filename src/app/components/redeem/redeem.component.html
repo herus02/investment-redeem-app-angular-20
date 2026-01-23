@@ -97,3 +97,17 @@
     </div>
   </div>
 </div>
+
+@if (showSuccessModal()) {
+  <app-success-modal
+    (close)="closeSuccessModal()"
+    (newRedeem)="startNewRedeem()">
+  </app-success-modal>
+}
+
+@if (showErrorModal()) {
+  <app-error-modal
+    [invalidAcoesDetails]="invalidAcoesDetails()"
+    (close)="closeErrorModal()">
+  </app-error-modal>
+}

@@ -1,9 +1,12 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Acao, Investment, formatCurrency } from '../../models/investment.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, computed, signal } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+import { ErrorModalComponent } from '../error-modal/error-modal.component';
+import { FormsModule } from '@angular/forms';
 import { InvestmentService } from '../../services/investment.service';
-import { Investment, Acao, formatCurrency } from '../../models/investment.model';
+import { SuccessModalComponent } from '../modals/success-modal/success-modal.component';
 
 interface RedeemValue {
   acaoId: string;
@@ -16,7 +19,7 @@ interface RedeemValue {
 @Component({
   selector: 'app-redeem',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, SuccessModalComponent, ErrorModalComponent],
   templateUrl: './redeem.component.html',
   styleUrl: './redeem.component.scss'
 })
@@ -24,6 +27,9 @@ export class RedeemComponent implements OnInit {
   investment: Investment | undefined;
   formatCurrency = formatCurrency;
   redeemValues = signal<Map<string, RedeemValue>>(new Map());
+  showSuccessModal = signal(false);
+  showErrorModal = signal(false);
+  invalidAcoesDetails = signal<Array<{ nome: string; saldoMaximo: number }>>([]);
   
   totalRedeem = computed(() => {
     let total = 0;
@@ -125,7 +131,7 @@ export class RedeemComponent implements OnInit {
     redeem.formattedValue = formattedValue;
     redeem.hasError = numericValue > saldoAcumulado;
     redeem.errorMessage = redeem.hasError 
-      ? 'O valor a resgatar não pode ser maior que o saldo acumulado'
+      ? `O valor a resgatar não pode ser maior que R$ ${formatCurrency(saldoAcumulado)}`
       : '';
 
     currentMap.set(acaoId, redeem);
@@ -156,6 +162,26 @@ export class RedeemComponent implements OnInit {
   confirmRedeem(): void {
     if (!this.hasFilledFields() || !this.investment) return;
     
+    const invalidAcoesDetailsList: Array<{ nome: string; saldoMaximo: number }> = [];
+    this.redeemValues().forEach((redeem) => {
+      if (redeem.value > 0 && redeem.hasError) {
+        const acao = this.investment!.acoes.find(a => a.id === redeem.acaoId);
+        if (acao) {
+          const saldoMaximo = this.getSaldoAcumulado(acao);
+          invalidAcoesDetailsList.push({
+            nome: acao.nome,
+            saldoMaximo: saldoMaximo
+          });
+        }
+      }
+    });
+
+    if (invalidAcoesDetailsList.length > 0) {
+      this.invalidAcoesDetails.set(invalidAcoesDetailsList);
+      this.showErrorModal.set(true);
+      return;
+    }
+
     const redeemData = Array.from(this.redeemValues().values())
       .filter(r => r.value > 0 && !r.hasError)
       .map(r => ({
@@ -169,5 +195,20 @@ export class RedeemComponent implements OnInit {
       redeems: redeemData,
       total: this.totalRedeem()
     });
+
+    this.showSuccessModal.set(true);
+  }
+
+  closeSuccessModal(): void {
+    this.showSuccessModal.set(false);
+  }
+
+  closeErrorModal(): void {
+    this.showErrorModal.set(false);
+  }
+
+  startNewRedeem(): void {
+    this.showSuccessModal.set(false);
+    this.initializeRedeemValues();
   }
 }
