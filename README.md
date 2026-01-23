@@ -13,6 +13,14 @@ Implementadas até o momento:
 - Formatação de valores em Real
 - Interface alinhada ao screenshot fornecido
 - Testes unitários dos componentes e do service
+- Consumo da mock API 
+
+## Regras de Negócio
+Implementadas até o momento:
+
+### Lista de Investimentos
+- Investimentos com `indicadorCarencia = 'S'` são desabilitados e não permitem navegação
+- Investimentos disponíveis podem ser clicados para acessar a tela de resgate
 
 ## Requisitos
 - Node.js (versão 22 .12 ou superior)
@@ -40,3 +48,4 @@ A aplicação estará disponível em `http://localhost:4200`
 - RxJS
 - TypeScript
 - Testes unitários com Jasmine/Karma
+- Git
