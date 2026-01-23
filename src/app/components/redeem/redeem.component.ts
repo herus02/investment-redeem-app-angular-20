@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ErrorModalComponent } from '../error-modal/error-modal.component';
 import { FormsModule } from '@angular/forms';
 import { InvestmentService } from '../../services/investment.service';
-import { SuccessModalComponent } from '../modals/success-modal/success-modal.component';
+import { SuccessModalComponent } from '../success-modal/success-modal.component';
 
 interface RedeemValue {
   acaoId: string;
