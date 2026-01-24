@@ -30,7 +30,7 @@ export class RedeemComponent implements OnInit {
   showSuccessModal = signal(false);
   showErrorModal = signal(false);
   invalidAcoesDetails = signal<Array<{ nome: string; saldoMaximo: number }>>([]);
-  
+
   totalRedeem = computed(() => {
     let total = 0;
     this.redeemValues().forEach((redeem) => {
@@ -80,7 +80,7 @@ export class RedeemComponent implements OnInit {
 
   initializeRedeemValues(): void {
     if (!this.investment) return;
-    
+
     const newMap = new Map<string, RedeemValue>();
     this.investment.acoes.forEach((acao) => {
       newMap.set(acao.id, {
@@ -103,7 +103,7 @@ export class RedeemComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     const inputValue = input.value;
     const digitsOnly = inputValue.replace(/[^\d]/g, '');
-    
+
     if (digitsOnly === '') {
       const currentMap = new Map(this.redeemValues());
       const redeem = currentMap.get(acaoId)!;
@@ -116,7 +116,7 @@ export class RedeemComponent implements OnInit {
       input.value = '';
       return;
     }
-    
+
     const numericValue = parseFloat(digitsOnly) / 100;
     const formattedValue = this.formatCurrencyInput(numericValue);
 
@@ -126,17 +126,17 @@ export class RedeemComponent implements OnInit {
 
     const currentMap = new Map(this.redeemValues());
     const redeem = currentMap.get(acaoId)!;
-    
+
     redeem.value = numericValue;
     redeem.formattedValue = formattedValue;
     redeem.hasError = numericValue > saldoAcumulado;
-    redeem.errorMessage = redeem.hasError 
+    redeem.errorMessage = redeem.hasError
       ? `O valor a resgatar não pode ser maior que R$ ${formatCurrency(saldoAcumulado)}`
       : '';
 
     currentMap.set(acaoId, redeem);
     this.redeemValues.set(currentMap);
-    
+
     input.value = formattedValue;
   }
 
@@ -161,7 +161,7 @@ export class RedeemComponent implements OnInit {
 
   confirmRedeem(): void {
     if (!this.hasFilledFields() || !this.investment) return;
-    
+
     const invalidAcoesDetailsList: Array<{ nome: string; saldoMaximo: number }> = [];
     this.redeemValues().forEach((redeem) => {
       if (redeem.value > 0 && redeem.hasError) {
@@ -210,5 +210,6 @@ export class RedeemComponent implements OnInit {
   startNewRedeem(): void {
     this.showSuccessModal.set(false);
     this.initializeRedeemValues();
+    this.router.navigate(['/']);
   }
 }

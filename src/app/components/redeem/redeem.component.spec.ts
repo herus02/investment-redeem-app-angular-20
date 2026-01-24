@@ -323,6 +323,7 @@ describe('RedeemComponent', () => {
     const redeem = component.getRedeemValue(acaoId);
     expect(redeem.value).toBe(0);
     expect(redeem.formattedValue).toBe('');
+    expect(router.navigate).toHaveBeenCalledWith(['/']);
   });
 
   it('should handle error when loading investment', () => {
