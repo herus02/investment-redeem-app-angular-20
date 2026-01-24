@@ -26,7 +26,6 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # O caminho 'dist/projeto' depende do nome no seu angular.json
           path: dist/investmentos-app/browser
 
       - name: Deploy to GitHub Pages

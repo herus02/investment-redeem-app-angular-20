@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:deploy": "ng build --base-href /investment-redeem-app-angular-20/ && npx ngh --dir dist/investimentos-app/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:coverage": "ng test --watch --code-coverage"
