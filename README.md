@@ -2,8 +2,22 @@
 
 Esta é uma aplicação que simula um **resgate personalizado de fundos de investimento em ações**. Esse projeto é parte de um desafio técnico feito para a Coopersystem. 😍💚👕
 
+## TL:DR - Screenshots e Acesso
+Link: https://herus02.github.io/investment-redeem-app-angular-20/
+
+### Screenshots
+- Listagem dos dados (home)
+![Tela inicial](https://herus02.github.io/investment-redeem-app-angular-20/img/1.png)
+- Dados do investimento:
+![Tela de Resgate](https://herus02.github.io/investment-redeem-app-angular-20/img/2.png)
+- Apresentar erros na tela de Investimento:![Erros na tela de Resgate](https://herus02.github.io/investment-redeem-app-angular-20/img/3.png) 
+- Modal de erros na tela de Investimento:
+![Erro em mais de um campo na tela de Resgate](https://herus02.github.io/investment-redeem-app-angular-20/img/4.png)
+![Erro em um campo diferente do primeiro exemplo](https://herus02.github.io/investment-redeem-app-angular-20/img/5.png)
+- Modal de Sucesso:![Modal de sucesso na tela de Resgate](https://herus02.github.io/investment-redeem-app-angular-20/img/6.png)
 
 ## Funcionalidades
+Implementadas até o momento:
 
 - Listagem de investimentos em tabela responsiva e botões com ações:
   - Visualizar (ícone de busca)
@@ -12,19 +26,6 @@ Esta é uma aplicação que simula um **resgate personalizado de fundos de inves
 - Formatação de valores em Real
 - Interface alinhada ao screenshot fornecido
 - Testes unitários dos componentes e do service
-- Consumo da mock API 
-- Navegação para o componente de resgate 
-- Validação de campos (valor máximo) e másca  ra nos campos 
-- Cálculo dinâmico do valor total
-- Modal de confimação de sucesso
-- Modal de erro
-
-## Regras de Negócio
-Implementadas até o momento:
-
-### Lista de Investimentos
-- Investimentos com `indicadorCarencia = 'S'` são desabilitados e não permitem navegação
-- Investimentos disponíveis podem ser clicados para acessar a tela de resgate
 
 ## Requisitos
 - Node.js (versão 22 .12 ou superior)
@@ -42,15 +43,23 @@ npm  start
 ```
 A aplicação estará disponível em `http://localhost:4200`
 
+## API
+A aplicação consome a API mock:
+```
+GET https://api.mockfly.dev/mocks/8036277f-7108-4101-bd93-8d4ab9707da2/investiments
+```
 ## Tecnologias Utilizadas
 - Angular 20
   - Control Flow
   - Standalone Components
-  - `Inject()`
-  - Interceptor
-  - Signals
+  - `Inject()` para importar services
 - Bootstrap 5
 - RxJS
 - TypeScript
-- Testes unitários com Jasmine/Karma
-- Git
+- Testes com Jasmine/Karma
+
+## Resultado dos testes
+- Cobertura de testes acima de 90%:
+![Cobertura de testes](https://herus02.github.io/investment-redeem-app-angular-20/img/7.png)
+- Testes cobertos:
+![Cobertura de testes](https://herus02.github.io/investment-redeem-app-angular-20/img/8.png)
