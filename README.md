@@ -4,7 +4,6 @@ Esta é uma aplicação que simula um **resgate personalizado de fundos de inves
 
 
 ## Funcionalidades
-Implementadas até o momento:
 
 - Listagem de investimentos em tabela responsiva e botões com ações:
   - Visualizar (ícone de busca)
@@ -17,6 +16,8 @@ Implementadas até o momento:
 - Navegação para o componente de resgate 
 - Validação de campos (valor máximo) e másca  ra nos campos 
 - Cálculo dinâmico do valor total
+- Modal de confimação de sucesso
+- Modal de erro
 
 ## Regras de Negócio
 Implementadas até o momento:
