@@ -1,9 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RedeemComponent } from './redeem.component';
-import { InvestmentService } from '../../services/investment.service';
-import { of, throwError } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Investment, formatCurrency } from '../../models/investment.model';
+import { of, throwError } from 'rxjs';
+
+import { InvestmentService } from '../../services/investment.service';
+import { RedeemComponent } from './redeem.component';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
@@ -247,7 +248,11 @@ describe('RedeemComponent', () => {
     component.confirmRedeem();
 
     expect(consoleSpy).toHaveBeenCalled();
-    const callArgs = consoleSpy.calls.mostRecent().args[0];
+    const callArgs = consoleSpy.calls.mostRecent().args[1] as {
+      investment: string;
+      redeems: Array<{ acaoId: string; acaoNome: string; value: number }>;
+      total: number;
+    };
     expect(callArgs.investment).toBe(mockInvestment.nome);
     expect(callArgs.redeems.length).toBe(2);
     expect(callArgs.total).toBe(1500);
